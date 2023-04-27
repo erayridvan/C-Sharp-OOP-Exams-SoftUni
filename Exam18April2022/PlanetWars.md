@@ -1,302 +1,216 @@
-      C# OOP Exam - 14 August 2022thr 
+C# OOP Exam – 18 April 2022  
+
+Heroes 
 
 Overview 
 
-The Universe has entered one of its darkest eras. The planets are running out of resources and the species are suffering from starvation. New Commanders are leading powerful military units and arm their planets with devastating weapons. The war for the last energy sources will be ruthless. 
+You have to create a basic RPG game. In the game, there are maps, heroes, and weapons. 
 
 Setup 
 
-Upload only the PlanetWars project in every problem except Unit Tests 
+Upload only the Heroes project in every problem except Unit Tests. 
 
-Do not modify the interfaces or their namespaces 
+Do not modify the interfaces or their namespaces. 
 
-Use strong cohesion and loose coupling 
+Use strong cohesion and loose coupling. 
 
-Use inheritance and the provided interfaces wherever possible.  
+Use inheritance and the provided interfaces wherever possible. 
 
-This includes constructors, method parameters and return types 
+This includes constructors, method parameters, and return types. 
 
-Do not violate your interface implementations by adding more public methods or properties in the concrete class than the interface has defined 
+Do not violate your interface implementations by adding more public methods or properties in the concrete class than the interface has defined. 
 
-Make sure you have no public fields anywhere 
+Make sure you have no public fields anywhere. 
 
 Exception messages and output messages can be found in the "Utilities" folder. 
 
-For solving this problem use Visual Studio 2019 or Visual Studio 2022, and netcoreapp 3.1. 
+For solving this problem use Visual Studio 2019, and netcoreapp 3.1. 
 
 Task 1: Structure (50 points) 
 
-You are given 5 interfaces, and you have to implement their functionality in the correct classes. 
+For this task's evaluation logic in the methods isn't included. 
 
-There are 3 types of entities in the application: Weapon, MilitaryUnit and Planet. There should also be a  WeaponRepository, UnitRepository as well as PlanetRepository. 
+You are given interfaces, and you have to implement their functionality in the correct classes. 
+
+There are 3 types of entities in the application: Weapon, Hero, and Map. There should also be HeroRepository and WeaponRepository. 
 
 Weapon 
 
-Weapon is a base class of any type of weapon and it should not be able to be instantiated. Every Planet can possess only one Weapon from each type in it’s collection of weapons. 
-
-Data 
-
-Price – double - in billions QUID (Quasi Universal Intergalactic Denomination) 
-
-DestructionLevel –  int 
-
-The destruction level is a value between 1 and 10.  
-
-If the level is below 1, throw an ArgumentException with a message: 
-
- "Destruction level cannot be zero or negative." 
-
-If exceeds 10,  throw an ArgumentException with a message: "Destruction level cannot exceed 10 power points." 
-
-Constructor 
-
-The constructor should take the following values upon initialization: 
-
-int destructionLevel, double price 
-
-Child Classes 
-
-There are three concrete types of Weapons: 
-
-BioChemicalWeapon 
-
-Price of 3.2 billion QUID. 
-
-The constructor should take the following values upon initialization: int destructionLevel 
-
-NuclearWeapon 
-
-Price of 15 billion QUID. 
-
-The constructor should take the following values upon initialization: int destructionLevel 
-
-SpaceMissiles 
-
-Price of 8.75 billion QUID. 
-
-The constructor should take the following values upon initialization: int destructionLevel 
-
-MilitaryUnit 
-
-MilitaryUnit is a base class of any type of military unit and it should not be able to be instantiated. Every Planet can possess only one MilitaryUnit from each type in it’s collection of military units. 
-
-Data 
-
-Cost – double - in billions QUID (Quasi Universal Intergalactic Denomination) 
-
-EnduranceLevel –  int 
-
-The initial value of every MilitaryUnit is equal to 1 power point. 
-
-Behavior 
-
-void IncreaseEndurance() 
-
-Increases the endurance of the unit by 1 power point. 
-
-If exceeds 20, set the level to 20 and throw an ArgumentException with a message: "Endurance level cannot exceed 20 power points." 
-
-Constructor 
-
-The constructor should take the following values upon initialization: 
-
-double cost 
-
-Child Classes 
-
-There are three concrete types of MilitaryUnits: 
-
-StormTroopers 
-
-Cost of 2.5 billion QUID. 
-
-The constructor should not take any values upon initialization. 
-
-SpaceForces 
-
-Cost of 11 billion QUID. 
-
-The constructor should not take any values upon initialization. 
-
-AnonymousImpactUnit 
-
-Cost of 30 billion QUID. 
-
-The constructor should not take any values upon initialization. 
-
-Planet 
-
-The Planet is a class that holds information about the budget of the planet, the army and the military equipment. It should be able to be instantiated. 
-
-You need to keep track of some things, this is why you need some private fields in your Planet class: 
-
-units - UnitRepository 
-
-weapons - WeaponRepository 
+A weapon is a base class of any type of weapon and it should not be able to be instantiated. 
 
 Data 
 
 Name – string 
 
-If the name is null or whitespace, throw an ArgumentException with message: "Planet name cannot be null or empty." 
+If the name is null or whitespace, throw an ArgumentException with the message: "Weapon type cannot be null or empty." 
 
-Budget - double 
+All names are unique  
 
-The initial available budget in billions QUID (Quasi Universal Intergalactic Denomination) 
+Durability – int 
 
-If the budget is less than 0, throw an ArgumentException with a message: 
-
- "Budget's amount cannot be negative." 
-
-MilitaryPower – double, rounded to the third decimal places. A calculated property.  In order to calculate precise value, follow the sequence of the following operations: 
-
-Total amount = (sum of unit endurances + sum of weapon destruction levels) 
-
-If the planet has AnonymousImpactUnit in its military units (Army),  total amount increases with 30% 
-
-If the planet has NuclearWeapon in its Weapons , total amount increases with 45% 
-
-First check for AnonymousImpactUnit and then for NuclearWeapon 
-
-Remember to keep the property’s setter private 
-
-HINT: The property may be calculated in a separate private method. In order to fulfill the requirements, use Math.Round(value, 3) for the returned value. 
-
-IReadonlyCollection<IMilitaryUnit> Army 
-
-Returns  a collection of military units (UnitRepository) 
-
-IReadonlyCollection<IWeapon> Weapons 
-
-Returns  a collection of weapons (WeaponRepository) 
+If the durability is below 0, throw an ArgumentException with the message: "Durability cannot be below 0." 
 
 Behavior 
 
-void AddUnit(IMilitaryUnit unit) 
+abstract int DoDamage() 
 
-Adds new MilitaryUnit to the Army.  
+The DoDamage() method returns the damage of each weapon: 
+
+Mace - 25 damage 
+
+Claymore - 20 damage 
+
+Whenever the DoDamage method is invoked, the weapon's durability is decreased by 1. If the weapon's durability becomes 0, the method should return 0. 
+
+Constructor 
+
+The constructor of the Weapon class should accept the following parameters: 
+
+string name, int durability 
+
+Child Classes 
+
+There are two concrete types of Weapon: 
+
+Mace 
+
+The Mace does 25 damage.  
+
+The mace takes the following values upon initialization: 
+
+string name, int durability 
+
+Claymore 
+
+The Claymore does 20 damage.  
+
+The claymore takes the following values upon initialization: 
+
+string name, int durability 
+
+Hero 
+
+Hero is a base class for any type of hero and it should not be able to be instantiated. 
+
+Data 
+
+Name - string  
+
+If the name is null or whitespace, throw an ArgumentException with the message: "Hero name cannot be null or empty." 
+
+All names are unique 
+
+Health -  int 
+
+If the health is below 0, throw an ArgumentException with the message: "Hero health cannot be below 0." 
+
+Armour -  int 
+
+If the armour is below 0, throw an ArgumentException with the message: "Hero armour cannot be below 0." 
+
+IsAlive -  bool 
+
+Calculated property, if the health is above zero, returns true. 
+
+IWeapon -  Weapon 
+
+If the weapon is null, throw an ArgumentException with the message: "Weapon cannot be null." 
+
+Behavior  
 
 void AddWeapon(IWeapon weapon) 
 
-Adds new Weapon to the Weapons. 
+This method adds a weapon to the given hero. A hero can have only one weapon. 
 
-void TrainArmy() 
+void TakeDamage(int points) 
 
-The  TrainArmy() method should increase the EnduranceLevel of all forces  in the Army by 1 power point.  
-
-void Spend(double amount) 
-
-The  Spend() method should decrease the Budget by the given amount. 
-
-If the Budget is not enough to finish the purchase, throw an InvalidOperationException with a message: "Budget too low!" 
-
-void Profit(double amount) 
-
-The  Profit() method should increase the Budget by the given amount. 
-
-string PlanetInfo() 
-
-Returns a string with information about the planet in the format below: 
-
-"Planet: {planetName} 
-
---Budget: {budgetAmount} billion QUID 
---Forces: {militaryUnitName1}, {militaryUnitName2}, {militaryUnitName3} (…) / No units 
-
---Combat equipment: {weaponName1}, {weaponName2}, {weaponName3} (…) / No weapons 
---Military Power: {militaryPower}" 
-
-Note: Do not use "\r\n" for a new line.  
+The TakeDamage() method decreases the Hero's health. First, the armour is reduced. If the goes below or reaches zero set the armour to zero and transfer the damage to health points. If the health points are less than or equal to zero, set the health to zero, the hero is dead.  
 
 Constructor 
 
-A Planet should take the following values upon initialization:  
+The constructor of the Hero class should accept the following parameters: 
 
-string name, double budget 
+string name, int health, int armour 
+
+Child Classes 
+
+There are two types of Hero: 
+
+Barbarian 
+
+The constructor should take the following values upon initialization: 
+
+string name, int health, int armour 
+
+Knight 
+
+The constructor should take the following values upon initialization: 
+
+string name, int health, int armour 
+
+Map 
+
+Behavior 
+
+string Fight(ICollection<IHero> heroes) 
+
+Separates all heroes into two types - knights and barbarians. The battle continues until one of the teams is completely dead (all heroes have 0 health). The knights' attack first and after that the barbarians.  
+
+The attack happens like so:  
+
+Each knight (if he is alive) attacks each barbarian once and inflicts damage equal to the damage of his weapon. 
+
+Next, each barbarian (if he is alive) attacks on each knight and inflicts damage equal to the damage of his weapon. 
+
+The method returns a string with the winning team: 
+
+When knights win, print: "The knights took { number of death knights } casualties but won the battle." 
+
+When barbarians win, print: "The barbarians took { number of death barbarians } casualties but won the battle." 
+
+HeroRepository 
+
+A repository for the heroes. 
+
+Data 
+
+Models - a collection of heroes (unmodifiable) 
+
+Behavior 
+
+void Add(IHero model) 
+
+Adds a hero to the collection. 
+
+bool Remove(IHero model) 
+
+Removes a hero from the collection. Returns true if the deletion was successful, otherwise - false. 
+
+IHero FindByName(string name) 
+
+Returns the first hero with the given name. Otherwise, returns null. 
 
 WeaponRepository 
 
-The WeaponRepository is a class which represents collection of weapons. 
+A repository for weapons. 
 
 Data 
 
-Models – IReadOnlyCollection<IWeapon> 
-
-Some private field might be helpful 
+Models - a collection of weapons (unmodifiable) 
 
 Behavior 
 
-IWeapon FindByName(string weaponTypeName) 
+void Add(IWeapon model) 
 
-Returns a weapon with the given  type name, if it exists. If it doesn't, returns null. 
+Adds a weapon to the collection. 
 
-void AddItem(IWeapon weapon) 
+bool Remove(IWeapon model) 
 
-Adds new weapon to the repository. 
+Removes a weapon from the collection. Returns true if the deletion was successful, otherwise - false. 
 
-bool RemoveItem(string weaponTypeName) 
+IWeapon FindByName(string name) 
 
-Removes a weapon with the given typeName from the collection. Returns true if the deletion was sucessful. Otherwise returns false. 
-
-Constructor 
-
-The constructor should not take any values upon initialization. 
-
-UnitRepository 
-
-The UnitRepository is a class which represents collection of military units. 
-
-Data 
-
-Models – a collection IMilitaryUnit (unmodifiable) 
-
-Some private field might be helpful 
-
-Behavior 
-
-IMilitaryUnit FindByName(string unitTypeName) 
-
-Returns a unit with the given type name, if it exists. If it doesn't, returns null. 
-
-void AddItem(IMilitaryUnit unit) 
-
-Adds a unit to the repository. 
-
-bool RemoveItem(string unitTypeName) 
-
-Removes an unit with the given typeName from the collection. Returns true if the deletion was sucessful. Otherwise returns false. 
-
-Constructor 
-
-The constructor should not take any values upon initialization. 
-
-PlanetRepository 
-
-The PlanetRepository is a class which represents collection of planets. 
-
-Data 
-
-Models – a collection IPlanet (unmodifiable) 
-
-Some private field might be helpful 
-
-Behavior 
-
-IPlanet FindByName(string name) 
-
-Returns a planet with the given name, if it exists. If it doesn't, returns null. 
-
-void AddItem(IPlanet planet) 
-
-Adds a planet to the repository. 
-
-bool RemoveItem(string planetName) 
-
-Removes a planet with the given name from the collection. Returns true if the deletion was sucessful. Otherwise returns false. 
-
-Constructor 
-
-The constructor should not take any values upon initialization. 
+Returns the first weapon with the given name. Otherwise, returns null. 
 
 Task 2: Business Logic (150 points) 
 
@@ -306,153 +220,115 @@ The business logic of the program should be concentrated around several commands
 
 Note: The Controller class SHOULD NOT handle exceptions! The tests are designed to expect exceptions, not messages! 
 
-NOTE: When you create the Controller class, go into the Engine class constructor and uncomment the "this.controller = new Controller();" line. 
-
-The first interface is IController. You must create a Controller class, which implements the interface and implements all of its methods. The constructor of Controller does not take any arguments. The given methods should have the following logic: 
+The first interface is IController. Your task is to create a Controller class, which implements the interface and implements all of its methods. The constructor of Controller does not take any arguments. The given methods should have the logic described for each in the Commands section. When you create the Controller class, go into the Engine class constructor and uncomment the "this.controller = new Controller();" line. 
 
 Data 
 
-You need to keep track of some things, this is why you need a private field in your controller class: 
+You need to keep track of some things, this is why you need some private fields in your controller class: 
 
-planets - PlanetRepository 
+heroes - HeroRepository 
+
+weapons - WeaponRepository 
 
 Commands 
 
-There are several commands, which control the business logic of the application. They are stated below. 
+There are several commands, which control the business logic of the application. They are stated below. The command name passed to the methods will always be valid! 
 
-CreatePlanet Command 
-
-Parameters 
-
-planetName - string 
-
-budget – double 
-
-Functionality 
-
-Creates a planet with the provided name and budget.  
-
-If a Planet with the same name is already created, return the following message: "Planet {planetName} is already added!"  
-
-If the planet is valid, keep it in the repository of planets and return the following message: "Successfully added Planet: {planetName}".  
-
-AddUnit Command 
+CreateHero Command 
 
 Parameters 
 
-unitTypeName – string 
+type - string 
 
-planetName - string 
+name - string 
+
+health - int 
+
+armour - int 
 
 Functionality 
 
-Creates a MilitaryUnit from the given type and adds it to the Army of the Planet with the given name. Every unit is unique. A Planet can have only one MilitaryUnit from a specific type: 
+Creates a hero with the given parameters and adds it to the HeroRepository. 
 
-If a Planet with the given name doesn’t exist in the PlanetReposotiry, throw an InvalidOperationException with the following message: "Planet {planetName} does not exist!" 
+If a hero with the given name exists, throw an InvalidOperationException with the following message: "The hero { name } already exists." 
 
-If the MilitaryUnit is not available in our application (no such type of MilitaryUnit exists in the child classes), throw an InvalidOperationException with the following message: "{unitTypeName} still not available!" 
+If the hero type is invalid, throw an InvalidOperationException with the following message: "Invalid hero type." 
 
-If the same MilitaryUnit is already added, throw an InvalidOperationException with the following message: "{unitTypeName} already added to the Army of {planetName}!" 
+If the Hero is added successfully to the repository, return the following message:  
 
-If the MilitaryUnit is valid, add it to the UnitRepository of the planet. Planet’s Budget is reduced with the price of the unit and the following message is returned: "{unitTypeName} added successfully to the Army of {planetName}!" 
+For a knight print: "Successfully added Sir { name } to the collection." 
 
-AddWeapon Command 
+For a barbarian print: "Successfully added Barbarian { name } to the collection." 
+
+CreateWeapon Command 
 
 Parameters 
 
-planetName – string 
+type - string 
 
-weaponTypeName – string 
+name - string 
 
-destructionLevel - int 
+durability - int 
 
 Functionality 
 
-Creates a Weapon from the given type and adds it to the Weapons of the Planet with the given name. Every weapon is unique. A Planet can have only one Weapon from a specific type: 
+Creates a weapon with the given parameters and adds it to the WeaponRepository. Valid weapon types are: "Claymore" and "Mace": 
 
-If a Planet with the given name doesn’t exist in the PlanetRepository, throw an InvalidOperationException with the following message: "Planet {planetName} does not exist!" 
+If a weapon with the given name exists, throw an InvalidOperationException with a message: "The weapon { name } already exists." 
 
-If the same Weapon is already added, throw an InvalidOperationException with the following message: "{weaponTypeName} already added to the Weapons of {planetName}!" 
+If the weapon type is invalid, throw an InvalidOperationException with a message: "Invalid weapon type." 
 
-If the Weapon is not available in our application (no such type of Weapon exists in the child classes), throw an InvalidOperationException with the following message: "{weaponTypeName} still not available!" 
+If no errors are thrown, return a string with the following message: "A { weapon type } { weapon name } is added to the collection." Keep in mind that the weapon type should be lowercase. 
 
-If the Weapon is valid, add it to the WeaponRepository of the planet. Planet’s Budget is reduced with the price of the weapon and the following message is returned: "{planetName} purchased {weaponTypeName}!" 
-
-SpecializeForces Command 
+AddWeaponToHero Command 
 
 Parameters 
 
-planetName – string 
+weaponName - string 
+
+heroName - string 
 
 Functionality 
 
-Increases the EnduranceLevel of the Army of the specific Planet: 
+Adds a weapon with the given name, to a hero with the given name. If the operation is successful the weapon should be removed from the repository. 
 
-If a Planet with the given name doesn’t exist, throw an InvalidOperationException with the following message: "Planet {planetName} does not exist!"  
+If a hero with the given name does not exist, throw an InvalidOperationException with the following message: "Hero { name of the hero } does not exist." 
 
-If there are no Military units added still, throw an InvalidOperationException with the following message: "No units available for upgrade!" 
+If a weapon with the given name does not exist, throw an InvalidOperationException with the following message: "Weapon { name of the weapon } does not exist." 
 
-If the action is completed successfully, reduce the Budget by 1.25 billion QUID, train the army of the given Planet and return the following message: "{planetName} has upgraded its forces!". 
+If the hero already has a weapon, throw an InvalidOperationException with the following message: "Hero { name of the hero } is well-armed." 
 
-SpaceCombat Command 
+If no errors are thrown, return a string with the following message: "Hero {name of the hero} can participate in battle using a { weapon type }." Keep in mind that the weapon type should be lowercase. 
 
-Parameters 
-
-firstPlanetName – string 
-
-secondPlanetName – string 
+StartBattle Command 
 
 Functionality 
 
-The first planet declares war to the second. You will receive only planets, which are added to the universe, already. The planet with the bigger MilitaryPower wins the war: 
+A map is created and a fight starts with all heroes that are alive and has weapons! Returns the result from the Fight() method. 
 
-If both have the same MilitaryPower the winner is the Planet which owns NuclearWeapon 
-
-If both have the same MilitaryPower and both own NuclearWeapon OR both do NOT own NuclearWeapon, no one wins the war and both lose half of their Budget. The following message should be returned: "The only winners from the war are the ones who supply the bullets and the bandages!" 
-
-The winner loses half of its own Budget. Then takes half of the Budget left from the losing planet. The winner also adds the sum of all forces costs and weapons prices possessed by the losing planet to its Budget. The losing planet is deleted from the PlanetRepository of the Universe. The following message is returned: "{winningPlanetName} destructed {losingPlanetName}!"  
-
-ForcesReport Command 
+HeroReport Command 
 
 Functionality 
 
-Returns information about the military state in the Universe. You can use the PlanetInfo method. The planets must be ordered in descending order, by their MilitaryPower. Then by their names in ascending alphabetical order. Military units and weapons are arranged in the order of purchasing. 
+Returns information about each hero separated with a new line. Order them by hero type alphabetically, then by health descending, then by hero name alphabetically: 
 
-***UNIVERSE PLANET MILITARY REPORT*** 
+"{ hero type }: { hero name } 
+--Health: { hero health } 
+--Armour: { hero armour } 
 
-Planet: {planetName1} 
+--Weapon: { weapon name }/Unarmed 
 
---Budget: {budgetAmount} billion QUID 
---Forces: {militaryUnitTypeName1}, {militaryUnitTypeName2}, {militaryUnitTypeName3} (…) / No units 
+{ hero type }: { hero name } 
+--Health: { hero health } 
+--Armour: { hero armour } 
 
---Combat equipment: {weaponTypeName1}, {weaponTypeName2}, {weaponTypeName3} (…) / No weapons 
---Military Power: {militaryPower} 
+--Weapon: { weapon }/Unarmed 
 
-Planet: {planetName2} 
+(…)" 
 
---Budget: {budgetAmount} billion QUID 
---Forces: {militaryUnitTypeName1}, {militaryUnitTypeName2}, {militaryUnitTypeName3} (…) / No units 
+Note: Do not use "\n\r" for a new line. There is not an empty row between different heroes. 
 
---Combat equipment: {weaponTypeName1}, {weaponTypeName2}, {weaponTypeName3} (…) / No weapons 
---Military Power: {militaryPower} 
-
-… 
-
-Planet: {planetNameN} 
-
---Budget: {budgetAmount} billion QUID 
---Forces: {militaryUnitTypeName1}, {militaryUnitTypeName2}, {militaryUnitTypeName3} (…) / No units 
-
---Combat equipment: {weaponTypeName1}, {weaponTypeName2}, {weaponTypeName3} (…) / No weapons 
---Military Power: {militaryPower} 
-
- 
-
-Note: Do not use "\r\n" for a new line.  
-
-Hint: You can use StringBuilder.AppendLine() 
-
-Peace Command 
+Exit Command 
 
 Functionality 
 
@@ -462,23 +338,23 @@ Input / Output
 
 You are provided with one interface, which will help you with the correct execution process of your program. The interface is IEngine and the class implementing this interface should read the input and when the program finishes, this class should print the output. 
 
+You are given the Engine class with written logic in it. For the code to be compiled, some parts are commented on, don’t forget to uncomment them.  
+
 Input 
 
 Below, you can see the format in which each command will be given in the input: 
 
-CreatePlanet {planetName} {budget} 
+CreateHero { type } { name } { health } { armour } 
 
-AddUnit {unitTypeName} {planetName} 
+CreateWeapon { type } { name } { durability } 
 
-AddWeapon {planetName} {weaponTypeName} {destructionLevel} 
+AddWeaponToHero { weaponName } { heroName } 
 
-SpecializeForces {planetName} 
+StartBattle 
 
-SpaceCombat {firstPlanetName} {secondPlanetName} 
+HeroReport 
 
-ForcesReport 
-
-Peace 
+Exit 
 
 Output 
 
@@ -488,100 +364,224 @@ Examples
 
 Input 
 
-CreatePlanet Zomitune 300 
+CreateHero Knight Wilmetta 50 90 
 
-CreatePlanet Cippe-C77T 270 
+CreateHero Knight Dave 60 95 
 
-CreatePlanet Xunrichi 20.52 
+CreateHero Knight Serlon 40 100 
 
-AddUnit StormTroopers Dotrienides 
+CreateHero Knight ldis 80 110 
 
-AddUnit SpaceForces Zomitune 
+CreateHero Barbarian Alessia 110 40 
 
-AddUnit SpaceForces Zomitune 
+CreateHero Barbarian Casey 85 25 
 
-AddWeapon Xunrichi SpaceMissiles 2 
+CreateHero Barbarian Emersyn 100 35 
 
-AddWeapon Xunrichi BioChemicalWeapon 6 
+CreateHero Barbarian Attila 115 47 
 
-AddWeapon Xunrichi NuclearWeapon 8 
+CreateHero Barbarian Berenger 120 15 
 
-AddWeapon Cippe-C77T NuclearWeapon 11 
+CreateWeapon Claymore Almace 10 
 
-AddWeapon Cippe-C77T NuclearWeapon 10 
+CreateWeapon Claymore Caliburn 12 
 
-SpecializeForces Zomitune 
+CreateWeapon Claymore Dainsleif 9 
 
-AddUnit AnonymousImpactUnit Xunrichi 
+CreateWeapon Claymore Durandal 13 
 
-AddUnit StormTroopers Xunrichi 
+CreateWeapon Claymore Dyrnwyn 7 
 
-SpaceCombat Xunrichi Zomitune 
+CreateWeapon Mace Narcoleptic 15 
 
-ForcesReport 
+CreateWeapon Mace Stormcaller 14 
 
-Peace 
+CreateWeapon Mace Willbreaker 11 
+
+CreateWeapon Mace Justifier 9 
+
+AddWeaponToHero Almace Serlon 
+
+AddWeaponToHero Durandal ldis 
+
+AddWeaponToHero Dyrnwyn Alessia 
+
+AddWeaponToHero Narcoleptic Casey 
+
+AddWeaponToHero Stormcaller Emersyn 
+
+AddWeaponToHero Willbreaker Attila 
+
+AddWeaponToHero Justifier Berenger 
+
+AddWeaponToHero Dainsleif Dave 
+
+AddWeaponToHero Caliburn Wilmetta 
+
+StartBattle 
+
+Exit 
 
 Output 
 
-Successfully added Planet: Zomitune 
+Successfully added Sir Wilmetta to the collection. 
 
-Successfully added Planet: Cippe-C77T 
+Successfully added Sir Dave to the collection. 
 
-Successfully added Planet: Xunrichi 
+Successfully added Sir Serlon to the collection. 
 
-Planet Dotrienides does not exist! 
+Successfully added Sir ldis to the collection. 
 
-SpaceForces added successfully to the Army of Zomitune! 
+Successfully added Barbarian Alessia to the collection. 
 
-SpaceForces already added to the Army of Zomitune! 
+Successfully added Barbarian Casey to the collection. 
 
-Xunrichi purchased SpaceMissiles! 
+Successfully added Barbarian Emersyn to the collection. 
 
-Xunrichi purchased BioChemicalWeapon! 
+Successfully added Barbarian Attila to the collection. 
 
-Budget too low! 
+Successfully added Barbarian Berenger to the collection. 
 
-Destruction level cannot exceed 10 power points. 
+A claymore Almace is added to the collection. 
 
-Cippe-C77T purchased NuclearWeapon! 
+A claymore Caliburn is added to the collection. 
 
-Zomitune has upgraded its forces! 
+A claymore Dainsleif is added to the collection. 
 
-Budget too low! 
+A claymore Durandal is added to the collection. 
 
-StormTroopers added successfully to the Army of Xunrichi! 
+A claymore Dyrnwyn is added to the collection. 
 
-Xunrichi destructed Zomitune! 
+A mace Narcoleptic is added to the collection. 
 
-***UNIVERSE PLANET MILITARY REPORT*** 
+A mace Stormcaller is added to the collection. 
 
-Planet: Cippe-C77T 
+A mace Willbreaker is added to the collection. 
 
---Budget: 255 billion QUID 
+A mace Justifier is added to the collection. 
 
---Forces: No units 
+Hero Serlon can participate in battle using a claymore. 
 
---Combat equipment: NuclearWeapon 
+Hero ldis can participate in battle using a claymore. 
 
---Military Power: 14.5 
+Hero Alessia can participate in battle using a claymore. 
 
-Planet: Xunrichi 
+Hero Casey can participate in battle using a mace. 
 
---Budget: 157.91 billion QUID 
+Hero Emersyn can participate in battle using a mace. 
 
---Forces: StormTroopers 
+Hero Attila can participate in battle using a mace. 
 
---Combat equipment: SpaceMissiles, BioChemicalWeapon 
+Hero Berenger can participate in battle using a mace. 
 
---Military Power: 9 
+Hero Dave can participate in battle using a claymore. 
+
+Hero Wilmetta can participate in battle using a claymore. 
+
+The knights took 2 casualties but won the battle. 
 
  
 
+Input 
+
+CreateHero Knight  50 90 
+
+CreateHero Knight Dave 60 -5 
+
+CreateHero Knight Serlon -5 100 
+
+CreateHero Knight ldis 80 110 
+
+CreateHero Barbarian Alessia 110 40 
+
+CreateWeapon Claymore  10 
+
+CreateWeapon Claymore Caliburn -5 
+
+CreateWeapon Claymore Dainsleif 9 
+
+CreateWeapon Mace Willbreaker 11 
+
+CreateWeapon Mace Stormcaller 12 
+
+AddWeaponToHero Dainsleif ldis 
+
+AddWeaponToHero Willbreaker Alessia 
+
+AddWeaponToHero Willbreaker Alessia 
+
+AddWeaponToHero Stormcaller Alessia 
+
+CreateHero Knight Berenger 50 90 
+
+StartBattle 
+
+HeroReport 
+
+Exit 
+
+Output 
+
+Hero name cannot be null or empty. 
+
+Hero armour cannot be below 0. 
+
+Hero health cannot be below 0. 
+
+Successfully added Sir ldis to the collection. 
+
+Successfully added Barbarian Alessia to the collection. 
+
+Weapon type cannot be null or empty. 
+
+Durability cannot be below 0. 
+
+A claymore Dainsleif is added to the collection. 
+
+A mace Willbreaker is added to the collection. 
+
+A mace Stormcaller is added to the collection. 
+
+Hero ldis can participate in battle using a claymore. 
+
+Hero Alessia can participate in battle using a mace. 
+
+Weapon Willbreaker does not exist. 
+
+Hero Alessia is well-armed. 
+
+Successfully added Sir Berenger to the collection. 
+
+The knights took 0 casualties but won the battle.  
+
+Barbarian: Alessia 
+
+--Health: 0 
+
+--Armour: 0 
+
+--Weapon: Willbreaker 
+
+Knight: Berenger 
+
+--Health: 50 
+
+--Armour: 90 
+
+--Weapon: Unarmed 
+
+Knight: ldis 
+
+--Health: 15 
+
+--Armour: 0 
+
+--Weapon: Dainsleif 
+
 Task 3: Unit Tests (100 points) 
 
-You will receive a skeleton with Planet and Weapon classes inside. The classes will have some methods, fields and one constructor, which are working properly. You are NOT ALLOWED to change any class. Cover the both classes with unit tests to make sure that the class is working as intended. 
+You will receive a skeleton with Car and Garage classes inside. The Garage class has some methods, fields, and one constructor, which are working properly. The  Car class has three properties and a constructor. You are NOT ALLOWED to change any class. Cover the whole Garage class with unit tests to make sure that the class is working as intended. 
 
-You are provided with a unit test project in the project skeleton. 
+You are provided with a unit test project in the project skeleton. 
 
-Do NOT use Mocking in your unit tests! 
+Do NOT use Mocking in your unit tests! 
